@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Manifiesto>
+    <Barco>1423</Barco>
+    <Envios>
+        <Envio>
+            <Cliente>
+                <id>123</id>
+                <Nombre>ALSDM</Nombre>
+                <Direccion>dalskdma</Direccion>
+                <Telefono1>0192839</Telefono1>
+                <Telefono2>0145783</Telefono2>
+            </Cliente>
+            <Productos>
+                <Producto>
+                    <Nombre>Prod1<Nombre>
+                    <Cantidad>3</Cantidad>
+                    <FechaVencimiento>03-03-2022</FechaVencimiento>
+                </Producto>
+                <Producto>
+                    <Nombre>Prod2<Nombre>
+                    <Cantidad>8</Cantidad>
+                    <FechaVencimiento>02-12-2022</FechaVencimiento>
+                </Producto>
+            </Productos>
+        </Envio>
+    </Envios>
+</Manifiesto>
