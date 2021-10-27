@@ -16,5 +16,10 @@ namespace NavieraISWT2
         {
             InitializeComponent();
         }
+
+        private void ingresarBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

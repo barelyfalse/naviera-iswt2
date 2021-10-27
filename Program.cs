@@ -14,14 +14,14 @@ namespace NavieraISWT2
 {
     static class Program
     {
-        /// <summary>
-        /// Punto de entrada principal para la aplicación.
-        /// </summary>
+        static Thread xmlListeningThread;
+
         [STAThread]
         static void Main()
         {
-            Thread t = new Thread(XMLListening);
-            t.Start();
+            xmlListeningThread = new Thread(XMLListening);
+            xmlListeningThread.Start();
+            //xmlListeningThread.Abort();
             //ManifestSerialize();
 
             Application.EnableVisualStyles();
@@ -61,11 +61,11 @@ namespace NavieraISWT2
             Console.WriteLine("Info got serialized");
         }
 
-        static void Deserialize(string obj)
+        static void ManifestDeserialize(string obj)
         {
             Manifiesto m = (Manifiesto)obj.XmlDeserializeFromString<Manifiesto>();
             Console.WriteLine("Info got deserialized!");
-            //Console.WriteLine(m.Envios[1].Cliente.Nombre);
+            //meter productos a la tabla productos
         }
 
         public static T XmlDeserializeFromString<T>(this string objectData)
@@ -106,20 +106,16 @@ namespace NavieraISWT2
             {
                 var context = listener.GetContext();
                 ProcessRequest(context);
-                
             }
             listener.Close();
         }
 
         private static void ProcessRequest(HttpListenerContext context)
         {
-            // Get the data from the HTTP stream
             var body = new StreamReader(context.Request.InputStream).ReadToEnd();
+            // In body var lays all our hopes
 
-            Deserialize(body);
-
-            // In BODY lays all our hopes
-            // Console.WriteLine(body);
+            ManifestDeserialize(body);
 
             byte[] b = Encoding.UTF8.GetBytes("OK");
             context.Response.StatusCode = 200;

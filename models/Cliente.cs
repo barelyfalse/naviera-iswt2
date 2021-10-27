@@ -9,7 +9,6 @@ using System.Xml.Serialization;
 
 namespace NavieraISWT2.models
 {
-    //[XmlRoot("Cliente")]
     public class Cliente
     {
         public int Id { get; set; }

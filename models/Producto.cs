@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
 
 namespace NavieraISWT2.models
 {
-    //[XmlRoot("Producto")]
     public class Producto
     {
         public string Nombre { get; set; }

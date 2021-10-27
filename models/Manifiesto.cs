@@ -9,12 +9,9 @@ using System.Xml.Serialization;
 
 namespace NavieraISWT2.models
 {
-    //[XmlRoot("Manifiesto")]
     public class Manifiesto
     {
         public int Barco { get; set; }
-        //[XmlArray("Envios")]
-        //[XmlArrayItem("Envio")]
         public Envio[] Envios { get; set; }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
