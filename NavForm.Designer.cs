@@ -1,6 +1,8 @@
-﻿namespace NavieraISWT2
+﻿using System.Windows.Forms;
+
+namespace NavieraISWT2
 {
-    partial class Form1
+    partial class NavForm
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -21,7 +23,6 @@
         }
 
 
-
         #region Código generado por el Diseñador de Windows Forms
 
         /// <summary>
@@ -30,6 +31,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.waitingProductsLbl = new System.Windows.Forms.Label();
             this.ingresarBtn = new System.Windows.Forms.Button();
             this.retirarBtn = new System.Windows.Forms.Button();
@@ -48,6 +50,11 @@
             this.bahia3TimeLbl = new System.Windows.Forms.Label();
             this.bahia4TimeLbl = new System.Windows.Forms.Label();
             this.bahia5TimeLbl = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.timer4 = new System.Windows.Forms.Timer(this.components);
+            this.timer5 = new System.Windows.Forms.Timer(this.components);
             this.bahia1Pnl.SuspendLayout();
             this.bahia2Pnl.SuspendLayout();
             this.bahia3Pnl.SuspendLayout();
@@ -61,9 +68,9 @@
             this.waitingProductsLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.waitingProductsLbl.Location = new System.Drawing.Point(12, 19);
             this.waitingProductsLbl.Name = "waitingProductsLbl";
-            this.waitingProductsLbl.Size = new System.Drawing.Size(164, 17);
+            this.waitingProductsLbl.Size = new System.Drawing.Size(181, 17);
             this.waitingProductsLbl.TabIndex = 0;
-            this.waitingProductsLbl.Text = "Productos en espera:";
+            this.waitingProductsLbl.Text = "Productos en espera: {}";
             // 
             // ingresarBtn
             // 
@@ -86,7 +93,7 @@
             // 
             // bahia1Pnl
             // 
-            this.bahia1Pnl.BackColor = System.Drawing.SystemColors.Control;
+            this.bahia1Pnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.bahia1Pnl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bahia1Pnl.Controls.Add(this.label2);
             this.bahia1Pnl.Location = new System.Drawing.Point(16, 150);
@@ -105,7 +112,7 @@
             // 
             // bahia2Pnl
             // 
-            this.bahia2Pnl.BackColor = System.Drawing.SystemColors.Control;
+            this.bahia2Pnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.bahia2Pnl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bahia2Pnl.Controls.Add(this.label3);
             this.bahia2Pnl.Location = new System.Drawing.Point(120, 150);
@@ -124,7 +131,7 @@
             // 
             // bahia3Pnl
             // 
-            this.bahia3Pnl.BackColor = System.Drawing.SystemColors.Control;
+            this.bahia3Pnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.bahia3Pnl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bahia3Pnl.Controls.Add(this.label4);
             this.bahia3Pnl.Location = new System.Drawing.Point(224, 150);
@@ -143,7 +150,7 @@
             // 
             // bahia4Pnl
             // 
-            this.bahia4Pnl.BackColor = System.Drawing.SystemColors.Control;
+            this.bahia4Pnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.bahia4Pnl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bahia4Pnl.Controls.Add(this.label5);
             this.bahia4Pnl.Location = new System.Drawing.Point(328, 150);
@@ -162,7 +169,7 @@
             // 
             // bahia5Pnl
             // 
-            this.bahia5Pnl.BackColor = System.Drawing.SystemColors.Control;
+            this.bahia5Pnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.bahia5Pnl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bahia5Pnl.Controls.Add(this.label6);
             this.bahia5Pnl.Location = new System.Drawing.Point(432, 150);
@@ -181,54 +188,74 @@
             // 
             // bahia1TimeLbl
             // 
-            this.bahia1TimeLbl.AutoSize = true;
-            this.bahia1TimeLbl.Location = new System.Drawing.Point(18, 227);
+            this.bahia1TimeLbl.Location = new System.Drawing.Point(16, 227);
             this.bahia1TimeLbl.Name = "bahia1TimeLbl";
-            this.bahia1TimeLbl.Size = new System.Drawing.Size(28, 13);
+            this.bahia1TimeLbl.Size = new System.Drawing.Size(98, 13);
             this.bahia1TimeLbl.TabIndex = 4;
-            this.bahia1TimeLbl.Text = "0:00";
+            this.bahia1TimeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // bahia2TimeLbl
             // 
-            this.bahia2TimeLbl.AutoSize = true;
-            this.bahia2TimeLbl.Location = new System.Drawing.Point(122, 227);
+            this.bahia2TimeLbl.Location = new System.Drawing.Point(120, 227);
             this.bahia2TimeLbl.Name = "bahia2TimeLbl";
-            this.bahia2TimeLbl.Size = new System.Drawing.Size(28, 13);
+            this.bahia2TimeLbl.Size = new System.Drawing.Size(98, 13);
             this.bahia2TimeLbl.TabIndex = 4;
-            this.bahia2TimeLbl.Text = "0:00";
+            this.bahia2TimeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // bahia3TimeLbl
             // 
-            this.bahia3TimeLbl.AutoSize = true;
-            this.bahia3TimeLbl.Location = new System.Drawing.Point(226, 227);
+            this.bahia3TimeLbl.Location = new System.Drawing.Point(224, 227);
             this.bahia3TimeLbl.Name = "bahia3TimeLbl";
-            this.bahia3TimeLbl.Size = new System.Drawing.Size(28, 13);
+            this.bahia3TimeLbl.Size = new System.Drawing.Size(98, 13);
             this.bahia3TimeLbl.TabIndex = 4;
-            this.bahia3TimeLbl.Text = "0:00";
+            this.bahia3TimeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // bahia4TimeLbl
             // 
-            this.bahia4TimeLbl.AutoSize = true;
-            this.bahia4TimeLbl.Location = new System.Drawing.Point(330, 227);
+            this.bahia4TimeLbl.Location = new System.Drawing.Point(328, 227);
             this.bahia4TimeLbl.Name = "bahia4TimeLbl";
-            this.bahia4TimeLbl.Size = new System.Drawing.Size(28, 13);
+            this.bahia4TimeLbl.Size = new System.Drawing.Size(98, 13);
             this.bahia4TimeLbl.TabIndex = 4;
-            this.bahia4TimeLbl.Text = "0:00";
+            this.bahia4TimeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // bahia5TimeLbl
             // 
-            this.bahia5TimeLbl.AutoSize = true;
-            this.bahia5TimeLbl.Location = new System.Drawing.Point(434, 227);
+            this.bahia5TimeLbl.Location = new System.Drawing.Point(432, 227);
             this.bahia5TimeLbl.Name = "bahia5TimeLbl";
-            this.bahia5TimeLbl.Size = new System.Drawing.Size(28, 13);
+            this.bahia5TimeLbl.Size = new System.Drawing.Size(98, 13);
             this.bahia5TimeLbl.TabIndex = 4;
-            this.bahia5TimeLbl.Text = "0:00";
+            this.bahia5TimeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Form1
+            // timer1
+            // 
+            this.timer1.Interval = 10;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // timer2
+            // 
+            this.timer2.Interval = 10;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // timer3
+            // 
+            this.timer3.Interval = 10;
+            this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
+            // 
+            // timer4
+            // 
+            this.timer4.Interval = 10;
+            this.timer4.Tick += new System.EventHandler(this.timer4_Tick);
+            // 
+            // timer5
+            // 
+            this.timer5.Interval = 10;
+            this.timer5.Tick += new System.EventHandler(this.timer5_Tick);
+            // 
+            // NavForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 258);
+            this.ClientSize = new System.Drawing.Size(550, 250);
             this.Controls.Add(this.bahia5TimeLbl);
             this.Controls.Add(this.bahia4TimeLbl);
             this.Controls.Add(this.bahia3TimeLbl);
@@ -243,8 +270,9 @@
             this.Controls.Add(this.bahia1Pnl);
             this.Controls.Add(this.waitingProductsLbl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "Form1";
+            this.Name = "NavForm";
             this.Text = "Naviera ISWT2";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.bahia1Pnl.ResumeLayout(false);
             this.bahia1Pnl.PerformLayout();
             this.bahia2Pnl.ResumeLayout(false);
@@ -280,6 +308,11 @@
         private System.Windows.Forms.Label bahia3TimeLbl;
         private System.Windows.Forms.Label bahia4TimeLbl;
         private System.Windows.Forms.Label bahia5TimeLbl;
+        private Timer timer1;
+        private Timer timer2;
+        private Timer timer3;
+        private Timer timer4;
+        private Timer timer5;
     }
 }
 

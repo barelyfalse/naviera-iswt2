@@ -9,9 +9,11 @@ namespace NavieraISWT2.models
 {
     public class Producto
     {
+        public int id_producto { get; set; }
         public string Nombre { get; set; }
         public int Cantidad { get; set; }
         public string FechaVencimiento { get; set; }
+        public int id_envio { get; set; }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {

@@ -20,14 +20,14 @@ namespace NavieraISWT2
         static void Main()
         {
             xmlListeningThread = new Thread(XMLListening);
+            xmlListeningThread.IsBackground = true;
             xmlListeningThread.Start();
             //xmlListeningThread.Abort();
             //ManifestSerialize();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
-            
+            Application.Run(new NavForm());
         }
 
         static void ManifestSerialize()
@@ -36,7 +36,7 @@ namespace NavieraISWT2
                 13, 
                 new Envio[] { 
                     new Envio(
-                        new Cliente(1, "cliente", "calle 1", "123456", "123456"), 
+                        new Cliente("cliente", "calle 1", "123456", "123456"), 
                         new Producto[] {
                             new Producto("prod1", 3, "01-01-2022"),
                             new Producto("prod2", 6, "02-02-2022"),
@@ -44,7 +44,7 @@ namespace NavieraISWT2
                         }
                     ),
                     new Envio(
-                        new Cliente(2, "cliente2", "calle 2", "123456", "123456"),
+                        new Cliente("cliente2", "calle 2", "123456", "123456"),
                         new Producto[] {
                             new Producto("prod4", 3, "01-01-2022"),
                             new Producto("prod5", 2, "02-02-2022")
@@ -66,6 +66,15 @@ namespace NavieraISWT2
             Manifiesto m = (Manifiesto)obj.XmlDeserializeFromString<Manifiesto>();
             Console.WriteLine("Info got deserialized!");
             //meter productos a la tabla productos
+            foreach(Envio e in m.Envios)
+            {
+                SqliteDataAccess.GuardarEnvio(e);
+            }
+
+            Console.WriteLine("ships saved");
+
+            //SqliteDataAccess.SaveProduct(m.Envios[0].Productos[0], 1);
+
         }
 
         public static T XmlDeserializeFromString<T>(this string objectData)
@@ -125,6 +134,12 @@ namespace NavieraISWT2
             var output = context.Response.OutputStream;
             output.Write(b, 0, b.Length);
             context.Response.Close();
+        }
+
+        public static void StopHttpServer()
+        {
+            Console.WriteLine("Sopping http listening");
+            xmlListeningThread.Abort();
         }
     }
 }
