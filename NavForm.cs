@@ -72,6 +72,7 @@ namespace NavieraISWT2
 
         public void CloseBay(int bay)
         {
+            UpdateOnHoldProductsLbl();
             openBays[bay] = false;
             UpdateBayPanels();
 

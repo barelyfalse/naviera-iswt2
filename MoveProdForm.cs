@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -213,11 +214,16 @@ namespace NavieraISWT2
                 er = true;
             }
 
-            if (string.IsNullOrEmpty(condTxtBx.Text) || !condTxtBx.Text.All(char.IsLetter))
+            string pattern = @"^[0-9A-Za-z ]+$";
+            Regex regex = new Regex(pattern);
+
+            if (string.IsNullOrEmpty(condTxtBx.Text) || regex.IsMatch(condTxtBx.Text) == false)
             {
                 errors += "\nNombre de conductor inválido";
                 er = true;
             }
+
+            int selectedProds = 0;
 
             foreach (DataGridViewRow row in prodsDGrid.Rows)
             {
@@ -228,7 +234,14 @@ namespace NavieraISWT2
                         errors += "\nNo se seleccionó categoria para el producto con ID " + row.Cells["id_producto"].Value;
                         er = true;
                     }
+                    selectedProds++;
                 }
+            }
+
+            if(selectedProds <= 0)
+            {
+                errors += "\nNo hay productos seleccionados";
+                er = true;
             }
 
             if (er)
@@ -237,8 +250,6 @@ namespace NavieraISWT2
             } 
             else
             {
-                Console.WriteLine("Sin errores uwu");
-
                 List<int> prodids = new List<int>();
                 foreach (DataGridViewRow row in prodsDGrid.Rows)
                 {
@@ -254,6 +265,17 @@ namespace NavieraISWT2
                 if(prodids.Count > 0)
                 {
                     SqliteDataAccess.EntryNote(numContTxtBx.Text, truckNumTxtBx.Text, condTxtBx.Text, openBayTimeLbl.Text, prodids.ToArray(), bay);
+                    DialogResult result;
+                    result = MessageBox.Show("¿Agregar estos productos a la bahía " + bay + "?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        if (bay != -1)
+                        {
+                            mainform.CloseBay(bay);
+                        }
+
+                        this.Close();
+                    }
                 }
             }
         }
