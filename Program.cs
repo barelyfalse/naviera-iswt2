@@ -68,7 +68,7 @@ namespace NavieraISWT2
             //meter productos a la tabla productos
             foreach(Envio e in m.Envios)
             {
-                SqliteDataAccess.GuardarEnvio(e);
+                SqliteDataAccess.SaveShipment(e);
             }
 
             Console.WriteLine("ships saved");

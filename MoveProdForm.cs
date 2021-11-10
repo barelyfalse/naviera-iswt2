@@ -238,6 +238,23 @@ namespace NavieraISWT2
             else
             {
                 Console.WriteLine("Sin errores uwu");
+
+                List<int> prodids = new List<int>();
+                foreach (DataGridViewRow row in prodsDGrid.Rows)
+                {
+                    if (row.Cells["selected"].Value != null && (bool)row.Cells["selected"].Value == true)
+                    {
+                        if(row.Cells["id_producto"].Value != null && int.TryParse(row.Cells["id_producto"].Value.ToString(), out int id))
+                        {
+                            prodids.Add(id);
+                        }
+                    }
+                }
+
+                if(prodids.Count > 0)
+                {
+                    SqliteDataAccess.EntryNote(numContTxtBx.Text, truckNumTxtBx.Text, condTxtBx.Text, openBayTimeLbl.Text, prodids.ToArray(), bay);
+                }
             }
         }
     }
