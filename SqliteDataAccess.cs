@@ -16,7 +16,7 @@ namespace NavieraISWT2
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = cnn.Query<Producto>("select id_producto, nombre as Nombre, cantidad as Cantidad, categoria as Categoria, fecha_vencimiento as FechaVencimiento, id_envio from Productos where ingresado = false", new DynamicParameters());
+                var output = cnn.Query<Producto>("select id_producto, nombre as Nombre, cantidad as Cantidad, peso as Peso, valor_referencia as ValorReferencia, categoria as Categoria, fecha_vencimiento as FechaVencimiento, id_envio from Productos where ingresado = false", new DynamicParameters());
                 //var outp = Dyn2Dict(output);
                 return output.ToList();
             }
@@ -76,7 +76,7 @@ namespace NavieraISWT2
                 //save products
                 foreach (Producto p in env.Productos)
                 {
-                    cnn.Execute("insert into Productos (nombre, cantidad, categoria, fecha_vencimiento, id_envio, ingresado) values (@Nombre, @Cantidad, 1, @FechaVencimiento, " + sendId.ToArray()[0] + ", false)", p);
+                    cnn.Execute("insert into Productos (nombre, cantidad, peso, valor_referencia, categoria, fecha_vencimiento, id_envio, ingresado) values (@Nombre, @Cantidad, @Peso, @ValorReferencia, 1, @FechaVencimiento, " + sendId.ToArray()[0] + ", false)", p);
                 }
 
                 //cnn.Execute("insert into Productos (nombre, cantidad, categoria, fecha_vencimiento, id_envio, ingresado) values (@Nombre, @Cantidad, 1, @FechaVencimiento, false)", prod);

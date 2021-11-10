@@ -1,6 +1,6 @@
 ﻿namespace NavieraISWT2
 {
-    partial class IngresarProducto
+    partial class MoveProdForm
     {
         /// <summary>
         /// Required designer variable.
@@ -45,6 +45,7 @@
             this.bahia2 = new System.Windows.Forms.Button();
             this.bahia1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cancelBtn = new System.Windows.Forms.Button();
             this.storeProdBtn = new System.Windows.Forms.Button();
             this.prodsDGrid = new System.Windows.Forms.DataGridView();
             this.timerGrp = new System.Windows.Forms.GroupBox();
@@ -52,7 +53,6 @@
             this.openBayTimeLbl = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.cancelBtn = new System.Windows.Forms.Button();
             this.truckDataGroup.SuspendLayout();
             this.baySelectGrp.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -220,19 +220,32 @@
             this.groupBox1.Controls.Add(this.prodsDGrid);
             this.groupBox1.Location = new System.Drawing.Point(12, 170);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(753, 447);
+            this.groupBox1.Size = new System.Drawing.Size(838, 447);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Productos de entrada";
             // 
+            // cancelBtn
+            // 
+            this.cancelBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.cancelBtn.Location = new System.Drawing.Point(6, 401);
+            this.cancelBtn.Name = "cancelBtn";
+            this.cancelBtn.Size = new System.Drawing.Size(92, 39);
+            this.cancelBtn.TabIndex = 2;
+            this.cancelBtn.Text = "Cancelar";
+            this.cancelBtn.UseVisualStyleBackColor = false;
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
+            // 
             // storeProdBtn
             // 
-            this.storeProdBtn.Location = new System.Drawing.Point(312, 401);
+            this.storeProdBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.storeProdBtn.Location = new System.Drawing.Point(104, 401);
             this.storeProdBtn.Name = "storeProdBtn";
             this.storeProdBtn.Size = new System.Drawing.Size(128, 39);
             this.storeProdBtn.TabIndex = 1;
             this.storeProdBtn.Text = "Ingresar producto";
-            this.storeProdBtn.UseVisualStyleBackColor = true;
+            this.storeProdBtn.UseVisualStyleBackColor = false;
+            this.storeProdBtn.Click += new System.EventHandler(this.storeProdBtn_Click);
             // 
             // prodsDGrid
             // 
@@ -246,7 +259,7 @@
             this.prodsDGrid.Location = new System.Drawing.Point(6, 19);
             this.prodsDGrid.Name = "prodsDGrid";
             this.prodsDGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.prodsDGrid.Size = new System.Drawing.Size(741, 376);
+            this.prodsDGrid.Size = new System.Drawing.Size(826, 376);
             this.prodsDGrid.TabIndex = 0;
             // 
             // timerGrp
@@ -294,28 +307,18 @@
             this.timer1.Interval = 1;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // cancelBtn
-            // 
-            this.cancelBtn.Location = new System.Drawing.Point(10, 409);
-            this.cancelBtn.Name = "cancelBtn";
-            this.cancelBtn.Size = new System.Drawing.Size(75, 23);
-            this.cancelBtn.TabIndex = 2;
-            this.cancelBtn.Text = "Cancelar";
-            this.cancelBtn.UseVisualStyleBackColor = true;
-            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
-            // 
-            // IngresarProducto
+            // MoveProdForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(776, 629);
+            this.ClientSize = new System.Drawing.Size(862, 629);
             this.Controls.Add(this.baySelectGrp);
             this.Controls.Add(this.timerGrp);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.truckDataGroup);
             this.Controls.Add(this.bayEntryLbl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "IngresarProducto";
+            this.Name = "MoveProdForm";
             this.Text = "IngresarProducto";
             this.Load += new System.EventHandler(this.IngresarProducto_Load);
             this.truckDataGroup.ResumeLayout(false);

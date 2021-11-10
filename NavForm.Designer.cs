@@ -90,6 +90,7 @@ namespace NavieraISWT2
             this.retirarBtn.TabIndex = 2;
             this.retirarBtn.Text = "Retirar producto";
             this.retirarBtn.UseVisualStyleBackColor = true;
+            this.retirarBtn.Click += new System.EventHandler(this.retirarBtn_Click);
             // 
             // bahia1Pnl
             // 

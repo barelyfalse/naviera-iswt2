@@ -14,6 +14,7 @@ namespace NavieraISWT2
     {
         bool[] openBays = new bool[5];
         int[] openBayTimes = new int[5];
+        public float baseCost { get; set; }
 
         public NavForm()
         {
@@ -21,11 +22,18 @@ namespace NavieraISWT2
             openBayTimes = new int[5];
             InitializeComponent();
             UpdateOnHoldProductsLbl();
+            baseCost = 1;
         }
 
         private void ingresarBtn_Click(object sender, EventArgs e)
         {
-            IngresarProducto ingProd = new IngresarProducto(this);
+            MoveProdForm ingProd = new MoveProdForm(this, true);
+            ingProd.Show();
+        }
+
+        private void retirarBtn_Click(object sender, EventArgs e)
+        {
+            MoveProdForm ingProd = new MoveProdForm(this, false);
             ingProd.Show();
         }
 
@@ -106,7 +114,7 @@ namespace NavieraISWT2
             waitingProductsLbl.Text = "Productos en espera: " + wait;
         }
 
-        public void FocusForm(IngresarProducto pro)
+        public void FocusForm(MoveProdForm pro)
         {
             this.BringToFront();
             this.Focus();
@@ -162,5 +170,6 @@ namespace NavieraISWT2
             TimeSpan span = TimeSpan.FromMilliseconds(openBayTimes[4]);
             this.bahia5TimeLbl.Text = span.ToString().Length > 11 ? span.ToString().Remove(11) : span.ToString() + ".00";
         }
+
     }
 }
