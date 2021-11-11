@@ -18,6 +18,7 @@ namespace NavieraISWT2
         int bay = -1;
         int openBayTime = 0;
         bool enterProduct;
+        bool[] bays;
 
         public MoveProdForm(NavForm main, bool enter)
         {
@@ -49,7 +50,7 @@ namespace NavieraISWT2
                 costCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 costCol.CellTemplate = new DataGridViewTextBoxCell();
             }
-
+            KeyValuePair<int, string> def;
             DataGridViewComboBoxColumn cmboxCol = new DataGridViewComboBoxColumn();
             {
                 cmboxCol.HeaderText = "Categoria";
@@ -57,7 +58,14 @@ namespace NavieraISWT2
                 cmboxCol.CellTemplate = new DataGridViewComboBoxCell();
                 cmboxCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 cmboxCol.FlatStyle = FlatStyle.Flat;
-                cmboxCol.Items.AddRange("Alimentos", "Electronicos", "Sin clasificar");
+                List<KeyValuePair<int, string>> cat = SqliteDataAccess.LoadCategories();
+                foreach(KeyValuePair<int, string> o in cat)
+                {
+                    cmboxCol.Items.Add(o);
+                }
+                def = cat[0];
+                cmboxCol.DisplayMember = "Value";
+                cmboxCol.ValueMember = "Key";
             }
 
             prodsDGrid.Columns.Insert(0, selCol);
@@ -91,8 +99,6 @@ namespace NavieraISWT2
             prodsDGrid.Columns[7].HeaderText = "ID Envio";
             prodsDGrid.Columns[7].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
 
-            prodsDGrid.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-
             prodsDGrid.ReadOnly = false;
             for(int i = 1; i < prodsDGrid.Columns.Count - 1; i++)
             {
@@ -107,6 +113,7 @@ namespace NavieraISWT2
                     row.Cells[8].Value = (mainform.baseCost * (float.Parse(row.Cells[3].Value.ToString()) * float.Parse(row.Cells[4].Value.ToString()))).ToString();
                     row.Cells[8].ToolTipText = mainform.baseCost + " * (" + row.Cells[3].Value + " * " + row.Cells[4].Value + ")";
                 }
+                row.Cells[9].Value = 1;
             }
         }
 
@@ -130,7 +137,7 @@ namespace NavieraISWT2
 
         private void GetSelectableBays()
         {
-            bool[] bays = mainform.GetOpenBays();
+            bays = mainform.GetOpenBays();
 
             bahia1.Enabled = !bays[0];
             bahia2.Enabled = !bays[1];
@@ -141,37 +148,38 @@ namespace NavieraISWT2
 
         private void bahia1_Click(object sender, EventArgs e)
         {
-            mainform.OpenBay(0);
-            bay = 0;
-            SelectedBay();
+            OpenBay(0);
         }
 
         private void bahia2_Click(object sender, EventArgs e)
         {
-            mainform.OpenBay(1);
-            bay = 1;
-            SelectedBay();
+            OpenBay(1);
         }
 
         private void bahia3_Click(object sender, EventArgs e)
         {
-            mainform.OpenBay(2);
-            bay = 2;
-            SelectedBay();
+            OpenBay(2);
         }
 
         private void bahia4_Click(object sender, EventArgs e)
         {
-            mainform.OpenBay(3);
-            bay = 3; 
-            SelectedBay();
+            OpenBay(3);
         }
 
         private void bahia5_Click(object sender, EventArgs e)
         {
-            mainform.OpenBay(4);
-            bay = 4;
-            SelectedBay();
+            OpenBay(4);
+        }
+
+        private void OpenBay(int bayToOpen)
+        {
+            GetSelectableBays();
+            if (bays[bayToOpen] == false)
+            {
+                mainform.OpenBay(bayToOpen);
+                bay = bayToOpen;
+                SelectedBay();
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -202,6 +210,8 @@ namespace NavieraISWT2
             truckNumTxtBx.Text = truckNumTxtBx.Text.Trim(charsToTrim);
             condTxtBx.Text = condTxtBx.Text.Trim(charsToTrim);
 
+
+
             if (string.IsNullOrEmpty(numContTxtBx.Text) || !numContTxtBx.Text.All(char.IsDigit))
             {
                 errors += "Número de contenedor inválido!";
@@ -227,13 +237,14 @@ namespace NavieraISWT2
 
             foreach (DataGridViewRow row in prodsDGrid.Rows)
             {
-                if(row.Cells["selected"].Value != null && (bool)row.Cells["selected"].Value == true)
+                if (row.Cells["selected"].Value != null && (bool)row.Cells["selected"].Value == true)
                 {
-                    if(row.Cells["category"].Value == null)
+                    if (row.Cells["category"].Value == null || (int)row.Cells["category"].Value == 1)
                     {
                         errors += "\nNo se seleccionó categoria para el producto con ID " + row.Cells["id_producto"].Value;
                         er = true;
                     }
+
                     selectedProds++;
                 }
             }
@@ -251,6 +262,7 @@ namespace NavieraISWT2
             else
             {
                 List<int> prodids = new List<int>();
+                List<int> prodCats = new List<int>();
                 foreach (DataGridViewRow row in prodsDGrid.Rows)
                 {
                     if (row.Cells["selected"].Value != null && (bool)row.Cells["selected"].Value == true)
@@ -259,14 +271,19 @@ namespace NavieraISWT2
                         {
                             prodids.Add(id);
                         }
+
+                        if (row.Cells["category"].Value != null)
+                        {
+                            prodCats.Add((int)row.Cells["category"].Value);
+                        }
                     }
                 }
 
                 if(prodids.Count > 0)
                 {
-                    SqliteDataAccess.EntryNote(numContTxtBx.Text, truckNumTxtBx.Text, condTxtBx.Text, openBayTimeLbl.Text, prodids.ToArray(), bay);
+                    SqliteDataAccess.EntryNote(numContTxtBx.Text, truckNumTxtBx.Text, condTxtBx.Text, openBayTimeLbl.Text, prodids.ToArray(), prodCats.ToArray(), bay);
                     DialogResult result;
-                    result = MessageBox.Show("¿Agregar estos productos a la bahía " + bay + "?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    result = MessageBox.Show("¿Agregar estos productos a la bahía " + (bay + 1) + "?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == System.Windows.Forms.DialogResult.Yes)
                     {
                         if (bay != -1)

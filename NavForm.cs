@@ -33,8 +33,9 @@ namespace NavieraISWT2
 
         private void retirarBtn_Click(object sender, EventArgs e)
         {
-            MoveProdForm ingProd = new MoveProdForm(this, false);
-            ingProd.Show();
+            SqliteDataAccess.LoadCategories();
+            //MoveProdForm ingProd = new MoveProdForm(this, false);
+            //ingProd.Show();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -172,5 +173,10 @@ namespace NavieraISWT2
             this.bahia5TimeLbl.Text = span.ToString().Length > 11 ? span.ToString().Remove(11) : span.ToString() + ".00";
         }
 
+        private void paramBtn_Click(object sender, EventArgs e)
+        {
+            Parameters param = new Parameters(this);
+            param.ShowDialog();
+        }
     }
 }

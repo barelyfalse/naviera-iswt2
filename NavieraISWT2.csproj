@@ -87,6 +87,12 @@
     <Compile Include="models\Envio.cs" />
     <Compile Include="models\Manifiesto.cs" />
     <Compile Include="models\Producto.cs" />
+    <Compile Include="Parameters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Parameters.Designer.cs">
+      <DependentUpon>Parameters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqliteDataAccess.cs" />
@@ -95,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NavForm.resx">
       <DependentUpon>NavForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Parameters.resx">
+      <DependentUpon>Parameters.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

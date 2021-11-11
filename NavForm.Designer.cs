@@ -55,6 +55,7 @@ namespace NavieraISWT2
             this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.timer4 = new System.Windows.Forms.Timer(this.components);
             this.timer5 = new System.Windows.Forms.Timer(this.components);
+            this.paramBtn = new System.Windows.Forms.Button();
             this.bahia1Pnl.SuspendLayout();
             this.bahia2Pnl.SuspendLayout();
             this.bahia3Pnl.SuspendLayout();
@@ -252,11 +253,22 @@ namespace NavieraISWT2
             this.timer5.Interval = 10;
             this.timer5.Tick += new System.EventHandler(this.timer5_Tick);
             // 
+            // paramBtn
+            // 
+            this.paramBtn.Location = new System.Drawing.Point(435, 60);
+            this.paramBtn.Name = "paramBtn";
+            this.paramBtn.Size = new System.Drawing.Size(75, 23);
+            this.paramBtn.TabIndex = 5;
+            this.paramBtn.Text = "Parámetros";
+            this.paramBtn.UseVisualStyleBackColor = true;
+            this.paramBtn.Click += new System.EventHandler(this.paramBtn_Click);
+            // 
             // NavForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(550, 250);
+            this.Controls.Add(this.paramBtn);
             this.Controls.Add(this.bahia5TimeLbl);
             this.Controls.Add(this.bahia4TimeLbl);
             this.Controls.Add(this.bahia3TimeLbl);
@@ -314,6 +326,7 @@ namespace NavieraISWT2
         private Timer timer3;
         private Timer timer4;
         private Timer timer5;
+        private Button paramBtn;
     }
 }
 

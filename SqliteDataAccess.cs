@@ -21,6 +21,20 @@ namespace NavieraISWT2
             }
         }
 
+        public static List<KeyValuePair<int, string>> LoadCategories()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                List<KeyValuePair<int, string>> catgs = new List<KeyValuePair<int, string>>();
+                var output = cnn.Query("select * from Categorias", new DynamicParameters());
+                foreach (IDictionary<string, object> obj in output)
+                {
+                    catgs.Add(new KeyValuePair<int, string>(int.Parse(((object[])obj.Values)[0].ToString()), (string)(((object[])obj.Values)[1])));
+                }
+                return catgs;
+            }
+        }
+
         public static int GetProductosOnHold()
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -50,7 +64,7 @@ namespace NavieraISWT2
             }
         }
 
-        public static void EntryNote(string container, string plate, string driver, string time, int[] prodIds, int bay)
+        public static void EntryNote(string container, string plate, string driver, string time, int[] prodIds, int[] prodCats, int bay)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
@@ -67,14 +81,15 @@ namespace NavieraISWT2
 
                 //Console.WriteLine(entryId.ToArray()[0]);
 
-                foreach(int prodId in prodIds)
+                for(int i = 0; i < prodIds.Length; i++)
                 {
                     cnn.Query(
                         String.Format(
-                            "update Productos set bahia = {0}, ingresado = 1, id_nota_ingreso = {1} where id_producto = {2}",
+                            "update Productos set categoria = {0}, bahia = {1}, ingresado = 1, id_nota_ingreso = {2} where id_producto = {3}",
+                            prodCats[i],
                             bay + 1,
                             entryId.ToArray()[0],
-                            prodId
+                            prodIds[i]
                             )
                         );
                 }
