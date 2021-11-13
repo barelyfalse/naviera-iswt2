@@ -12,11 +12,34 @@ namespace NavieraISWT2
 {
     public class SqliteDataAccess
     {
-        public static List<Producto> LoadProducts()
+        public static List<Producto> LoadNotEnteredProducts()
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = cnn.Query<Producto>("select id_producto, nombre as Nombre, cantidad as Cantidad, peso as Peso, valor_referencia as ValorReferencia, categoria as Categoria, fecha_vencimiento as FechaVencimiento, id_envio from Productos where ingresado = false", new DynamicParameters());
+                var output = cnn.Query<Producto>("select id_producto, nombre as Nombre, cantidad as Cantidad, peso as Peso, valor_referencia as ValorReferencia, fecha_vencimiento as FechaVencimiento, id_envio from Productos where ingresado = false", new DynamicParameters());
+                return output.ToList();
+            }
+        }
+
+        public static List<Producto> LoadStoredProducts(int bay)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var output = cnn.Query<Producto>(
+                    "select Productos.id_producto, " +
+                    "Productos.nombre as Nombre, " +
+                    "Productos.cantidad as Cantidad, " +
+                    "Productos.peso as Peso, " +
+                    "Productos.valor_referencia as ValorReferencia, " +
+                    "Productos.fecha_vencimiento as fechaVencimiento, " +
+                    "Productos.id_envio, " +
+                    "Categorias.nombre as Categoria " +
+                    "from Productos " +
+                    "inner join Categorias " +
+                    "on Productos.categoria = Categorias.id_categoria " +
+                    "where Productos.ingresado = true " +
+                    "and Productos.bahia = "+bay+"; "
+                    , new DynamicParameters());
                 return output.ToList();
             }
         }
@@ -90,6 +113,35 @@ namespace NavieraISWT2
                             bay + 1,
                             entryId.ToArray()[0],
                             prodIds[i]
+                            )
+                        );
+                }
+            }
+        }
+
+        public static void RemoveNote(string plate, string driver, string time, int[] prodIds)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                //save entrynote
+                var entryId = cnn.Query<long>(
+                    String.Format(
+                        "insert into NotasDeSalida (fecha, placa_camion, conductor, tiempo_apertura) values ('{0}', '{1}', '{2}', '{3}'); SELECT last_insert_rowid();",
+                        DateTime.Now,
+                        plate,
+                        driver,
+                        time
+                    ));
+
+                //Console.WriteLine(entryId.ToArray()[0]);
+
+                for (int i = 0; i < prodIds.Length; i++)
+                {
+                    cnn.Query(
+                        String.Format(
+                            "update Productos set bahia = null, ingresado = 0, id_nota_ingreso = null, id_nota_salida = {0} where id_producto = {1}",
+                            entryId.ToArray()[0],
+                            prodIds[i]                            
                             )
                         );
                 }

@@ -16,6 +16,7 @@ namespace NavieraISWT2.models
         public float ValorReferencia { get; set; }
         public string FechaVencimiento { get; set; }
         public int id_envio { get; set; }
+        public string Categoria { get; set; }
         
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)

@@ -320,7 +320,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MoveProdForm";
             this.Text = "IngresarProducto";
-            this.Load += new System.EventHandler(this.IngresarProducto_Load);
+            this.Load += new System.EventHandler(this.MoveProd_Load);
             this.truckDataGroup.ResumeLayout(false);
             this.truckDataGroup.PerformLayout();
             this.baySelectGrp.ResumeLayout(false);

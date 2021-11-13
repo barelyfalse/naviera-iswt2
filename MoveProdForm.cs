@@ -30,10 +30,25 @@ namespace NavieraISWT2
             enterProduct = enter;
         }
 
-        private void IngresarProducto_Load(object sender, EventArgs e)
+        private void MoveProd_Load(object sender, EventArgs e)
         {
-            prodsDGrid.DataSource = SqliteDataAccess.LoadProducts();
+            if (enterProduct)
+            {
+                bayEntryLbl.Text = "Nota de ingreso a la bahía";
+                EnterProduct();
+            } else
+            {
+                bayEntryLbl.Text = "Nota de salida de bahía";
+                label2.Visible = false;
+                numContTxtBx.Visible = false;
+                storeProdBtn.Text = "Retirar producto";
+                this.Text = "Retirar producto";
+            }
+        }
 
+        private void EnterProduct()
+        {
+            prodsDGrid.DataSource = SqliteDataAccess.LoadNotEnteredProducts();
             DataGridViewCheckBoxColumn selCol = new DataGridViewCheckBoxColumn();
             {
                 selCol.HeaderText = "Seleccionar";
@@ -59,7 +74,7 @@ namespace NavieraISWT2
                 cmboxCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 cmboxCol.FlatStyle = FlatStyle.Flat;
                 List<KeyValuePair<int, string>> cat = SqliteDataAccess.LoadCategories();
-                foreach(KeyValuePair<int, string> o in cat)
+                foreach (KeyValuePair<int, string> o in cat)
                 {
                     cmboxCol.Items.Add(o);
                 }
@@ -82,13 +97,85 @@ namespace NavieraISWT2
                 7 - envio
                 8 - costo/día
                 9 - categoria
+                10 - categoria (from model)
             */
 
             prodsDGrid.Columns[1].HeaderText = "ID";
             prodsDGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
 
-            prodsDGrid.Columns[5].HeaderText = "Peso (T)";
+            prodsDGrid.Columns[4].HeaderText = "Peso (T)";
+            prodsDGrid.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+
+            prodsDGrid.Columns[5].HeaderText = "Valor de referencia";
             prodsDGrid.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+
+            prodsDGrid.Columns[6].HeaderText = "Fecha de vencimiento";
+            prodsDGrid.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+
+            prodsDGrid.Columns[7].HeaderText = "ID Envio";
+            prodsDGrid.Columns[7].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+
+            prodsDGrid.Columns[10].Visible = false;
+
+            prodsDGrid.ReadOnly = false;
+            for (int i = 1; i < prodsDGrid.Columns.Count - 2; i++)
+            {
+                prodsDGrid.Columns[i].ReadOnly = true;
+            }
+
+            foreach (DataGridViewRow row in prodsDGrid.Rows)
+            {
+                if (row.Cells[3].Value != null && row.Cells[4].Value != null)
+                {
+                    //cobro por dia = costo base * (tonelada * valor de referencia)
+                    row.Cells[8].Value = (mainform.baseCost * (float.Parse(row.Cells[3].Value.ToString()) * float.Parse(row.Cells[4].Value.ToString()))).ToString();
+                    row.Cells[8].ToolTipText = mainform.baseCost + " * (" + row.Cells[3].Value + " * " + row.Cells[4].Value + ")";
+                }
+                row.Cells[9].Value = 1;
+            }
+        }
+
+        private void RemoveProduct(int bay)
+        {
+            prodsDGrid.DataSource = SqliteDataAccess.LoadStoredProducts(bay);
+
+            DataGridViewCheckBoxColumn selCol = new DataGridViewCheckBoxColumn();
+            {
+                selCol.HeaderText = "Seleccionar";
+                selCol.Name = "selected";
+                selCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                selCol.FlatStyle = FlatStyle.Standard;
+                selCol.CellTemplate = new DataGridViewCheckBoxCell();
+            }
+
+            DataGridViewColumn costCol = new DataGridViewColumn();
+            {
+                costCol.HeaderText = "Costo/ día";
+                costCol.Name = "cost";
+                costCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                costCol.CellTemplate = new DataGridViewTextBoxCell();
+            }
+
+            prodsDGrid.Columns.Insert(0, selCol);
+            prodsDGrid.Columns.Insert(8, costCol);
+
+            /*  0 - seleccionar
+                1 - id
+                2 - Nombre
+                3 - peso
+                4 - valor de referencia
+                5 - cantidad
+                6 - fecha vencimiento
+                7 - envio
+                8 - costo/día
+                9 - categoria
+            */
+
+            prodsDGrid.Columns[1].HeaderText = "ID";
+            prodsDGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+
+            prodsDGrid.Columns[4].HeaderText = "Peso (T)";
+            prodsDGrid.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
 
             prodsDGrid.Columns[5].HeaderText = "Valor de referencia";
             prodsDGrid.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -100,20 +187,19 @@ namespace NavieraISWT2
             prodsDGrid.Columns[7].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
 
             prodsDGrid.ReadOnly = false;
-            for(int i = 1; i < prodsDGrid.Columns.Count - 1; i++)
+            for (int i = 1; i < prodsDGrid.Columns.Count; i++)
             {
                 prodsDGrid.Columns[i].ReadOnly = true;
             }
 
             foreach (DataGridViewRow row in prodsDGrid.Rows)
             {
-                if(row.Cells[3].Value != null && row.Cells[4].Value != null)
+                if (row.Cells[3].Value != null && row.Cells[4].Value != null)
                 {
                     //cobro por dia = costo base * (tonelada * valor de referencia)
                     row.Cells[8].Value = (mainform.baseCost * (float.Parse(row.Cells[3].Value.ToString()) * float.Parse(row.Cells[4].Value.ToString()))).ToString();
                     row.Cells[8].ToolTipText = mainform.baseCost + " * (" + row.Cells[3].Value + " * " + row.Cells[4].Value + ")";
                 }
-                row.Cells[9].Value = 1;
             }
         }
 
@@ -130,7 +216,7 @@ namespace NavieraISWT2
         {
             baySelectGrp.Visible = false;
             lockInputs(false);
-            bayEntryLbl.Text = "Nota de ingreso a bahía " + (bay + 1);
+            bayEntryLbl.Text += " " + (bay + 1);
             //timer logic
             timer1.Enabled = true;
         }
@@ -178,6 +264,12 @@ namespace NavieraISWT2
             {
                 mainform.OpenBay(bayToOpen);
                 bay = bayToOpen;
+
+                if (!enterProduct)
+                {
+                    RemoveProduct(bayToOpen + 1);
+                }
+                
                 SelectedBay();
             }
         }
@@ -203,14 +295,24 @@ namespace NavieraISWT2
 
         private void storeProdBtn_Click(object sender, EventArgs e)
         {
+            if (enterProduct)
+            {
+                EnterProductValidation();
+            }
+            else
+            {
+                RemoveProductValidation();
+            }
+        }
+
+        private void EnterProductValidation()
+        {
             string errors = "";
             bool er = false;
 
             numContTxtBx.Text = numContTxtBx.Text.Trim(charsToTrim);
             truckNumTxtBx.Text = truckNumTxtBx.Text.Trim(charsToTrim);
             condTxtBx.Text = condTxtBx.Text.Trim(charsToTrim);
-
-
 
             if (string.IsNullOrEmpty(numContTxtBx.Text) || !numContTxtBx.Text.All(char.IsDigit))
             {
@@ -249,7 +351,7 @@ namespace NavieraISWT2
                 }
             }
 
-            if(selectedProds <= 0)
+            if (selectedProds <= 0)
             {
                 errors += "\nNo hay productos seleccionados";
                 er = true;
@@ -258,7 +360,7 @@ namespace NavieraISWT2
             if (er)
             {
                 MessageBox.Show(errors, "Error de entrada!", MessageBoxButtons.OK);
-            } 
+            }
             else
             {
                 List<int> prodids = new List<int>();
@@ -267,7 +369,7 @@ namespace NavieraISWT2
                 {
                     if (row.Cells["selected"].Value != null && (bool)row.Cells["selected"].Value == true)
                     {
-                        if(row.Cells["id_producto"].Value != null && int.TryParse(row.Cells["id_producto"].Value.ToString(), out int id))
+                        if (row.Cells["id_producto"].Value != null && int.TryParse(row.Cells["id_producto"].Value.ToString(), out int id))
                         {
                             prodids.Add(id);
                         }
@@ -279,13 +381,88 @@ namespace NavieraISWT2
                     }
                 }
 
-                if(prodids.Count > 0)
+                if (prodids.Count > 0)
                 {
-                    SqliteDataAccess.EntryNote(numContTxtBx.Text, truckNumTxtBx.Text, condTxtBx.Text, openBayTimeLbl.Text, prodids.ToArray(), prodCats.ToArray(), bay);
                     DialogResult result;
                     result = MessageBox.Show("¿Agregar estos productos a la bahía " + (bay + 1) + "?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == System.Windows.Forms.DialogResult.Yes)
                     {
+                        SqliteDataAccess.EntryNote(numContTxtBx.Text, truckNumTxtBx.Text, condTxtBx.Text, openBayTimeLbl.Text, prodids.ToArray(), prodCats.ToArray(), bay);
+                        if (bay != -1)
+                        {
+                            mainform.CloseBay(bay);
+                        }
+                        this.Close();
+                    }
+                }
+            }
+        }
+
+        private void RemoveProductValidation()
+        {
+            string errors = "";
+            bool er = false;
+
+            truckNumTxtBx.Text = truckNumTxtBx.Text.Trim(charsToTrim);
+            condTxtBx.Text = condTxtBx.Text.Trim(charsToTrim);
+
+            if (string.IsNullOrEmpty(truckNumTxtBx.Text) || !truckNumTxtBx.Text.All(char.IsLetterOrDigit))
+            {
+                errors += "\nPlaca de camión inválida";
+                er = true;
+            }
+
+            string pattern = @"^[0-9A-Za-z ]+$";
+            Regex regex = new Regex(pattern);
+
+            if (string.IsNullOrEmpty(condTxtBx.Text) || regex.IsMatch(condTxtBx.Text) == false)
+            {
+                errors += "\nNombre de conductor inválido";
+                er = true;
+            }
+
+            int selectedProds = 0;
+
+            foreach (DataGridViewRow row in prodsDGrid.Rows)
+            {
+                if (row.Cells["selected"].Value != null && (bool)row.Cells["selected"].Value == true)
+                {
+                    selectedProds++;
+                }
+            }
+
+            if (selectedProds <= 0)
+            {
+                errors += "\nNo hay productos seleccionados";
+                er = true;
+            }
+
+            if (er)
+            {
+                MessageBox.Show(errors, "Error de entrada!", MessageBoxButtons.OK);
+            }
+            else
+            {
+                List<int> prodids = new List<int>();
+                foreach (DataGridViewRow row in prodsDGrid.Rows)
+                {
+                    if (row.Cells["selected"].Value != null && (bool)row.Cells["selected"].Value == true)
+                    {
+                        if (row.Cells["id_producto"].Value != null && int.TryParse(row.Cells["id_producto"].Value.ToString(), out int id))
+                        {
+                            prodids.Add(id);
+                        }
+                    }
+                }
+
+                if (prodids.Count > 0)
+                {
+                    //SqliteDataAccess.EntryNote(numContTxtBx.Text, truckNumTxtBx.Text, condTxtBx.Text, openBayTimeLbl.Text, prodids.ToArray(), prodCats.ToArray(), bay);
+                    DialogResult result;
+                    result = MessageBox.Show("¿Retirar estos productos de la bahía " + (bay + 1) + "?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        SqliteDataAccess.RemoveNote(truckNumTxtBx.Text, condTxtBx.Text, openBayTimeLbl.Text, prodids.ToArray());
                         if (bay != -1)
                         {
                             mainform.CloseBay(bay);

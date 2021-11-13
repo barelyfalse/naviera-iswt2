@@ -33,9 +33,8 @@ namespace NavieraISWT2
 
         private void retirarBtn_Click(object sender, EventArgs e)
         {
-            SqliteDataAccess.LoadCategories();
-            //MoveProdForm ingProd = new MoveProdForm(this, false);
-            //ingProd.Show();
+            MoveProdForm ingProd = new MoveProdForm(this, false);
+            ingProd.Show();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
