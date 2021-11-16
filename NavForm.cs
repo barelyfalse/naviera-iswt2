@@ -177,5 +177,17 @@ namespace NavieraISWT2
             Parameters param = new Parameters(this);
             param.ShowDialog();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MoveProdNotesForm notes = new MoveProdNotesForm(true);
+            notes.Show();
+        }
+
+        private void removeNotesBtn_Click(object sender, EventArgs e)
+        {
+            MoveProdNotesForm notes = new MoveProdNotesForm(false);
+            notes.Show();
+        }
     }
 }

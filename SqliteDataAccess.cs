@@ -16,7 +16,8 @@ namespace NavieraISWT2
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = cnn.Query<Producto>("select id_producto, nombre as Nombre, cantidad as Cantidad, peso as Peso, valor_referencia as ValorReferencia, fecha_vencimiento as FechaVencimiento, id_envio from Productos where ingresado = false", new DynamicParameters());
+                var output = cnn.Query<Producto>("select id_producto, nombre as Nombre, cantidad as Cantidad, peso as Peso, valor_referencia as ValorReferencia, fecha_vencimiento as FechaVencimiento, id_envio from Productos where ingresado = false and id_nota_salida is null", new DynamicParameters());
+                Console.WriteLine(output.Count());
                 return output.ToList();
             }
         }
@@ -62,8 +63,65 @@ namespace NavieraISWT2
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                var count = cnn.Query<long>("select count(*) as Count from Productos where Ingresado = false");
+                var count = cnn.Query<long>("select count(*) as Count from Productos where Ingresado = false and id_nota_salida is null");
                 return (int)count.ToArray()[0];
+            }
+        }
+
+        public static List<Producto> LoadEntryNoteProducts(int noteId)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var output = cnn.Query<Producto>(
+                    "select " +
+                    "Productos.id_producto as id_producto, " +
+                    "Productos.nombre, " +
+                    "Productos.cantidad, " +
+                    "Productos.peso, " +
+                    "Productos.valor_referencia as ValorReferencia, " +
+                    "Categorias.nombre as Categoria, " +
+                    "Productos.fecha_vencimiento as FechaVencimiento, " +
+                    "Productos.bahia, " +
+                    "Productos.id_envio " + 
+                    "from Productos " +
+                    "inner join Categorias " +
+                    "on Productos.categoria = Categorias.id_categoria " +
+                    "where id_nota_ingreso = "+ noteId +";"
+                    , new DynamicParameters());
+                return output.ToList();
+            }
+        }
+
+        public static List<Producto> LoadRemoveNoteProducts(int noteId)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var output = cnn.Query<Producto>(
+                    "select " +
+                    "Productos.id_producto as id_producto, " +
+                    "Productos.nombre, " +
+                    "Productos.cantidad, " +
+                    "Productos.peso, " +
+                    "Productos.valor_referencia as ValorReferencia, " +
+                    "Categorias.nombre as Categoria, " +
+                    "Productos.fecha_vencimiento as FechaVencimiento, " +
+                    "Productos.bahia, " +
+                    "Productos.id_envio " +
+                    "from Productos " +
+                    "inner join Categorias " +
+                    "on Productos.categoria = Categorias.id_categoria " +
+                    "where id_nota_salida = " + noteId + ";"
+                    , new DynamicParameters());
+                return output.ToList();
+            }
+        }
+
+        public static Cliente LoadNoteClient(int shipId)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var output = cnn.Query<Cliente>("select Clientes.nombre, Clientes.direccion, Clientes.telefono1, Clientes.telefono2 from Envios inner join Clientes on Envios.id_cliente = Clientes.id_cliente where id_envio = "+shipId+";", new DynamicParameters());
+                return output.ToList()[0];
             }
         }
 
@@ -145,6 +203,28 @@ namespace NavieraISWT2
                             )
                         );
                 }
+            }
+        }
+
+        public static List<NotaIngreso> LoadEntryNotes()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                //select id_nota_ingreso as ID, fecha as Fecha, contenedor as Contenedor, placa_camion as PlacaCamion, conductor as Conductor, tiempo_apertura as TiempoApertura from NotasDeIngreso
+
+                var output = cnn.Query<NotaIngreso>("select id_nota_ingreso as ID, fecha as Fecha, contenedor as Contenedor, placa_camion as PlacaCamion, conductor as Conductor, tiempo_apertura as TiempoApertura from NotasDeIngreso", new DynamicParameters());
+                return output.ToList();
+            }
+        }
+
+        public static List<NotaIngreso> LoadRemoveNotes()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                //select id_nota_ingreso as ID, fecha as Fecha, contenedor as Contenedor, placa_camion as PlacaCamion, conductor as Conductor, tiempo_apertura as TiempoApertura from NotasDeIngreso
+
+                var output = cnn.Query<NotaIngreso>("select id_nota_salida as ID, fecha as Fecha, placa_camion as PlacaCamion, conductor as Conductor, tiempo_apertura as TiempoApertura from NotasDeSalida", new DynamicParameters());
+                return output.ToList();
             }
         }
 

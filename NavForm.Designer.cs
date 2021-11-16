@@ -56,11 +56,17 @@ namespace NavieraISWT2
             this.timer4 = new System.Windows.Forms.Timer(this.components);
             this.timer5 = new System.Windows.Forms.Timer(this.components);
             this.paramBtn = new System.Windows.Forms.Button();
+            this.removeNotesBtn = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.entryRemoveBtnsGrpBx = new System.Windows.Forms.GroupBox();
+            this.optsGrpBx = new System.Windows.Forms.GroupBox();
             this.bahia1Pnl.SuspendLayout();
             this.bahia2Pnl.SuspendLayout();
             this.bahia3Pnl.SuspendLayout();
             this.bahia4Pnl.SuspendLayout();
             this.bahia5Pnl.SuspendLayout();
+            this.entryRemoveBtnsGrpBx.SuspendLayout();
+            this.optsGrpBx.SuspendLayout();
             this.SuspendLayout();
             // 
             // waitingProductsLbl
@@ -75,9 +81,9 @@ namespace NavieraISWT2
             // 
             // ingresarBtn
             // 
-            this.ingresarBtn.Location = new System.Drawing.Point(148, 60);
+            this.ingresarBtn.Location = new System.Drawing.Point(6, 19);
             this.ingresarBtn.Name = "ingresarBtn";
-            this.ingresarBtn.Size = new System.Drawing.Size(109, 59);
+            this.ingresarBtn.Size = new System.Drawing.Size(150, 81);
             this.ingresarBtn.TabIndex = 1;
             this.ingresarBtn.Text = "Ingresar producto";
             this.ingresarBtn.UseVisualStyleBackColor = true;
@@ -85,9 +91,9 @@ namespace NavieraISWT2
             // 
             // retirarBtn
             // 
-            this.retirarBtn.Location = new System.Drawing.Point(276, 60);
+            this.retirarBtn.Location = new System.Drawing.Point(164, 20);
             this.retirarBtn.Name = "retirarBtn";
-            this.retirarBtn.Size = new System.Drawing.Size(109, 59);
+            this.retirarBtn.Size = new System.Drawing.Size(150, 80);
             this.retirarBtn.TabIndex = 2;
             this.retirarBtn.Text = "Retirar producto";
             this.retirarBtn.UseVisualStyleBackColor = true;
@@ -98,7 +104,7 @@ namespace NavieraISWT2
             this.bahia1Pnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.bahia1Pnl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bahia1Pnl.Controls.Add(this.label2);
-            this.bahia1Pnl.Location = new System.Drawing.Point(16, 150);
+            this.bahia1Pnl.Location = new System.Drawing.Point(16, 167);
             this.bahia1Pnl.Name = "bahia1Pnl";
             this.bahia1Pnl.Size = new System.Drawing.Size(98, 70);
             this.bahia1Pnl.TabIndex = 3;
@@ -117,7 +123,7 @@ namespace NavieraISWT2
             this.bahia2Pnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.bahia2Pnl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bahia2Pnl.Controls.Add(this.label3);
-            this.bahia2Pnl.Location = new System.Drawing.Point(120, 150);
+            this.bahia2Pnl.Location = new System.Drawing.Point(120, 167);
             this.bahia2Pnl.Name = "bahia2Pnl";
             this.bahia2Pnl.Size = new System.Drawing.Size(98, 70);
             this.bahia2Pnl.TabIndex = 3;
@@ -136,7 +142,7 @@ namespace NavieraISWT2
             this.bahia3Pnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.bahia3Pnl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bahia3Pnl.Controls.Add(this.label4);
-            this.bahia3Pnl.Location = new System.Drawing.Point(224, 150);
+            this.bahia3Pnl.Location = new System.Drawing.Point(224, 167);
             this.bahia3Pnl.Name = "bahia3Pnl";
             this.bahia3Pnl.Size = new System.Drawing.Size(98, 70);
             this.bahia3Pnl.TabIndex = 3;
@@ -155,7 +161,7 @@ namespace NavieraISWT2
             this.bahia4Pnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.bahia4Pnl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bahia4Pnl.Controls.Add(this.label5);
-            this.bahia4Pnl.Location = new System.Drawing.Point(328, 150);
+            this.bahia4Pnl.Location = new System.Drawing.Point(328, 167);
             this.bahia4Pnl.Name = "bahia4Pnl";
             this.bahia4Pnl.Size = new System.Drawing.Size(98, 70);
             this.bahia4Pnl.TabIndex = 3;
@@ -174,7 +180,7 @@ namespace NavieraISWT2
             this.bahia5Pnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.bahia5Pnl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bahia5Pnl.Controls.Add(this.label6);
-            this.bahia5Pnl.Location = new System.Drawing.Point(432, 150);
+            this.bahia5Pnl.Location = new System.Drawing.Point(432, 167);
             this.bahia5Pnl.Name = "bahia5Pnl";
             this.bahia5Pnl.Size = new System.Drawing.Size(98, 70);
             this.bahia5Pnl.TabIndex = 3;
@@ -190,7 +196,7 @@ namespace NavieraISWT2
             // 
             // bahia1TimeLbl
             // 
-            this.bahia1TimeLbl.Location = new System.Drawing.Point(16, 227);
+            this.bahia1TimeLbl.Location = new System.Drawing.Point(16, 244);
             this.bahia1TimeLbl.Name = "bahia1TimeLbl";
             this.bahia1TimeLbl.Size = new System.Drawing.Size(98, 13);
             this.bahia1TimeLbl.TabIndex = 4;
@@ -198,7 +204,7 @@ namespace NavieraISWT2
             // 
             // bahia2TimeLbl
             // 
-            this.bahia2TimeLbl.Location = new System.Drawing.Point(120, 227);
+            this.bahia2TimeLbl.Location = new System.Drawing.Point(120, 244);
             this.bahia2TimeLbl.Name = "bahia2TimeLbl";
             this.bahia2TimeLbl.Size = new System.Drawing.Size(98, 13);
             this.bahia2TimeLbl.TabIndex = 4;
@@ -206,7 +212,7 @@ namespace NavieraISWT2
             // 
             // bahia3TimeLbl
             // 
-            this.bahia3TimeLbl.Location = new System.Drawing.Point(224, 227);
+            this.bahia3TimeLbl.Location = new System.Drawing.Point(224, 244);
             this.bahia3TimeLbl.Name = "bahia3TimeLbl";
             this.bahia3TimeLbl.Size = new System.Drawing.Size(98, 13);
             this.bahia3TimeLbl.TabIndex = 4;
@@ -214,7 +220,7 @@ namespace NavieraISWT2
             // 
             // bahia4TimeLbl
             // 
-            this.bahia4TimeLbl.Location = new System.Drawing.Point(328, 227);
+            this.bahia4TimeLbl.Location = new System.Drawing.Point(328, 244);
             this.bahia4TimeLbl.Name = "bahia4TimeLbl";
             this.bahia4TimeLbl.Size = new System.Drawing.Size(98, 13);
             this.bahia4TimeLbl.TabIndex = 4;
@@ -222,7 +228,7 @@ namespace NavieraISWT2
             // 
             // bahia5TimeLbl
             // 
-            this.bahia5TimeLbl.Location = new System.Drawing.Point(432, 227);
+            this.bahia5TimeLbl.Location = new System.Drawing.Point(432, 244);
             this.bahia5TimeLbl.Name = "bahia5TimeLbl";
             this.bahia5TimeLbl.Size = new System.Drawing.Size(98, 13);
             this.bahia5TimeLbl.TabIndex = 4;
@@ -255,27 +261,69 @@ namespace NavieraISWT2
             // 
             // paramBtn
             // 
-            this.paramBtn.Location = new System.Drawing.Point(435, 60);
+            this.paramBtn.Location = new System.Drawing.Point(6, 19);
             this.paramBtn.Name = "paramBtn";
-            this.paramBtn.Size = new System.Drawing.Size(75, 23);
+            this.paramBtn.Size = new System.Drawing.Size(188, 23);
             this.paramBtn.TabIndex = 5;
             this.paramBtn.Text = "Parámetros";
             this.paramBtn.UseVisualStyleBackColor = true;
             this.paramBtn.Click += new System.EventHandler(this.paramBtn_Click);
             // 
+            // removeNotesBtn
+            // 
+            this.removeNotesBtn.Location = new System.Drawing.Point(6, 77);
+            this.removeNotesBtn.Name = "removeNotesBtn";
+            this.removeNotesBtn.Size = new System.Drawing.Size(188, 23);
+            this.removeNotesBtn.TabIndex = 6;
+            this.removeNotesBtn.Text = "Notas de salida";
+            this.removeNotesBtn.UseVisualStyleBackColor = true;
+            this.removeNotesBtn.Click += new System.EventHandler(this.removeNotesBtn_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(6, 48);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(188, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Notas de entrada";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // entryRemoveBtnsGrpBx
+            // 
+            this.entryRemoveBtnsGrpBx.Controls.Add(this.retirarBtn);
+            this.entryRemoveBtnsGrpBx.Controls.Add(this.ingresarBtn);
+            this.entryRemoveBtnsGrpBx.Location = new System.Drawing.Point(12, 45);
+            this.entryRemoveBtnsGrpBx.Name = "entryRemoveBtnsGrpBx";
+            this.entryRemoveBtnsGrpBx.Size = new System.Drawing.Size(320, 110);
+            this.entryRemoveBtnsGrpBx.TabIndex = 8;
+            this.entryRemoveBtnsGrpBx.TabStop = false;
+            this.entryRemoveBtnsGrpBx.Text = "Ingreso/Retiro de producto";
+            // 
+            // optsGrpBx
+            // 
+            this.optsGrpBx.Controls.Add(this.paramBtn);
+            this.optsGrpBx.Controls.Add(this.button1);
+            this.optsGrpBx.Controls.Add(this.removeNotesBtn);
+            this.optsGrpBx.Location = new System.Drawing.Point(338, 45);
+            this.optsGrpBx.Name = "optsGrpBx";
+            this.optsGrpBx.Size = new System.Drawing.Size(200, 110);
+            this.optsGrpBx.TabIndex = 9;
+            this.optsGrpBx.TabStop = false;
+            this.optsGrpBx.Text = "Herramientas";
+            // 
             // NavForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 250);
-            this.Controls.Add(this.paramBtn);
+            this.ClientSize = new System.Drawing.Size(550, 266);
+            this.Controls.Add(this.optsGrpBx);
+            this.Controls.Add(this.entryRemoveBtnsGrpBx);
             this.Controls.Add(this.bahia5TimeLbl);
             this.Controls.Add(this.bahia4TimeLbl);
             this.Controls.Add(this.bahia3TimeLbl);
             this.Controls.Add(this.bahia2TimeLbl);
             this.Controls.Add(this.bahia1TimeLbl);
-            this.Controls.Add(this.retirarBtn);
-            this.Controls.Add(this.ingresarBtn);
             this.Controls.Add(this.bahia5Pnl);
             this.Controls.Add(this.bahia4Pnl);
             this.Controls.Add(this.bahia3Pnl);
@@ -296,6 +344,8 @@ namespace NavieraISWT2
             this.bahia4Pnl.PerformLayout();
             this.bahia5Pnl.ResumeLayout(false);
             this.bahia5Pnl.PerformLayout();
+            this.entryRemoveBtnsGrpBx.ResumeLayout(false);
+            this.optsGrpBx.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -327,6 +377,10 @@ namespace NavieraISWT2
         private Timer timer4;
         private Timer timer5;
         private Button paramBtn;
+        private Button removeNotesBtn;
+        private Button button1;
+        private GroupBox entryRemoveBtnsGrpBx;
+        private GroupBox optsGrpBx;
     }
 }
 

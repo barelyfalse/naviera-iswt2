@@ -15,6 +15,7 @@ namespace NavieraISWT2
     static class Program
     {
         static Thread xmlListeningThread;
+        static NavForm mainForm;
 
         [STAThread]
         static void Main()
@@ -27,7 +28,8 @@ namespace NavieraISWT2
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new NavForm());
+            mainForm = new NavForm();
+            Application.Run(mainForm);
         }
 
         static void ManifestSerialize()
@@ -72,9 +74,7 @@ namespace NavieraISWT2
             }
 
             Console.WriteLine("ships saved");
-
-            //SqliteDataAccess.SaveProduct(m.Envios[0].Productos[0], 1);
-
+            //mainForm.UpdateOnHoldProductsLbl();
         }
 
         public static T XmlDeserializeFromString<T>(this string objectData)
